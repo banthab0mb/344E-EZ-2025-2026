@@ -8,6 +8,6 @@ https://github.com/purduesigbots
 
 ## Used Templates:
 
-EZ_Template https://github.com/EZ-Robotics/EZ-Template
+EZ-Template: https://github.com/EZ-Robotics/EZ-Template
 
-StormLib https://github.com/ItzSt0rmz/StormLib
+StormLib: https://github.com/ItzSt0rmz/StormLib
