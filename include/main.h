@@ -46,10 +46,10 @@
 #include "stormlib/api.hpp"
 
 // More includes here...
-#include "autonbuilder.hpp"  // IWYU pragma: keep
+#include "autonBuilder.hpp"  // IWYU pragma: keep
 #include "autons.hpp"  // IWYU pragma: keep
 #include "subsystems.hpp"  // IWYU pragma: keep
-#include "subsystems_auton.hpp"  // IWYU pragma: keep
+#include "subsystemsAuton.hpp"  // IWYU pragma: keep
 #include "ui/brainui.hpp"  // IWYU pragma: keep
 #include "ui/autonbuilderui.hpp"  // IWYU pragma: keep
 #include "ui/manualbuilderui.hpp"  // IWYU pragma: keep
