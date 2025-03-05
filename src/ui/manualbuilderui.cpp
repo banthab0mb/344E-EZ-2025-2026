@@ -469,8 +469,7 @@ void mancallback() {
 			ladder();
 		else if(manmodules[module_it].Name == "drop mogo") {
 			// cout << "drop mogo" << endl;
-			intake.move(0);
-			mogomech.set(false);
+			
 		}
 	}
 	if(color != 1) pros::c::task_delete(ringsorting);
