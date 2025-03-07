@@ -18,20 +18,21 @@ ez::Drive chassis(
 	{-1, 2, -3},  // Left Chassis Ports (negative port will reverse it!)
 	{4, -5, 6},	  // Right Chassis Ports (negative port will reverse it!)
 
-	11,	   // IMU Port
+	7,	   // IMU Port
 	2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-	450);  // Wheel RPM = cartridge * (motor gear / wheel gear)
+	450);  // Wheel RPM = cartridge * (motor gear / wheel gear) (600 * (36/48) = 450)
 
 // Are you using tracking wheels?  Comment out which ones you're using here!
 //  `2.75` is the wheel diameter
 //  `4.0` is the distance from the center of the wheel to the center of the robot
 // ez::tracking_wheel right_tracker({-'A', -'B'}, 2.75, 4.0);  // ADI Encoders
-//ez::tracking_wheel vertical_tracker(16, 2.03856, 0.7);	// Rotation sensors
-//ez::tracking_wheel horiz_tracker(10, 2.03856, -0.5);
+
+// Rotation sensors
+ez::tracking_wheel vertical_tracker(16, 2.75, 0.7);	
+ez::tracking_wheel horiz_tracker(17, 2.75, -0.5);
 
 // list of motors to get temperature
-pros::Motor intake1(12);
-pros::Motor wallstake(14);
+
 pros::Motor driveleft1(-1);
 pros::Motor driveleft2(2);
 pros::Motor driveleft3(-3);
@@ -39,7 +40,7 @@ pros::Motor driveright1(4);
 pros::Motor driveright2(-5);
 pros::Motor driveright3(6);
 
-vector<jas::motors::motordata> motorbar{{intake1, "intake 1"}, {driveleft1, "drive l1"},  {driveleft2, "drive l2"},	 {driveleft3, "drive l3"},
+vector<jas::motors::motordata> motorbar{{driveleft1, "drive l1"},  {driveleft2, "drive l2"},	 {driveleft3, "drive l3"},
 										{driveright1, "drive r1"}, {driveright2, "drive r2"}, {driveright3, "drive r3"}};
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -61,7 +62,7 @@ void initialize() {
 	// Configure your chassis controls
 	chassis.opcontrol_curve_buttons_toggle(false);	// Enables modifying the controller curve with buttons on the
 													// joysticks
-	chassis.opcontrol_drive_activebrake_set(4);		// Sets the active brake kP. We recommend ~2.  0 will disable.
+	chassis.opcontrol_drive_activebrake_set(2);		// Sets the active brake kP. We recommend ~2.  0 will disable.
 	chassis.opcontrol_curve_default_set(5, 2);		// Defaults for curve. If using tank, only the first parameter is
 													// used. (Comment this line out if you have an SD card!)
 
@@ -77,27 +78,14 @@ void initialize() {
 	// pros::E_CONTROLLER_DIGITAL_A);
 
 	// Autonomous Selector using lvgl
+	// redblufilt: Filter for red/blue alliance, posnegfilt: Filter for positive/negative positions, 
+	// name: Name of the autonomous routine, desc: Description of the autonomous routine, 
+	// mogo1, mogo2
+	// allyring: Flag for alliance stake
 	j_auton_selector.jautonpopulate(
-		{jas::jasauton(blue_50WP, 1, 1, "Blue 50% WP", "Blue 2 ring in positive corner", 2, 0, false),
-		 jas::jasauton(testautonBlue, 1, 2, "Blue test auton", "Testing for blue autons", 0, 0, false),
-		 jas::jasauton(testcolorsortRed, 1, 2, "Blue color sort test", "Testing for blue color sorting functions", 1, 5, true),
-
-		 jas::jasauton(red_50WP, 0, 1, "Red 50% WP", "Red 2 ring in positive corner", 2, 0, false),
-		 jas::jasauton(testautonRed, 0, 2, "Red test auton", "Testing for red autons", 0, 0, false),
-		 jas::jasauton(testcolorsortRed, 0, 2, "Red color sort test", "Testing for red color sorting functions", 5, 1, true),
-
-		 jas::jasauton(blue_4greed, 1, 0, "Blue 4 ring no WP", "Blue 4 ring in negative corner", 4, 0, false),
-		 jas::jasauton(blue_4ring, 1, 0, "Blue 4 ring WP", "Blue 3 ring in negative corner + 1 ring on alliance", 3, 0, true),
-		 jas::jasauton(blue_6ring, 1, 0, "Blue 6 ring no WP", "Blue 6 ring in negative corner", 6, 0, false),
-
-		 jas::jasauton(red_4greed, 0, 0, "Red 4 ring no WP", "Red 4 ring in negative corner", 4, 0, false),
-		 jas::jasauton(red_4ring, 0, 0, "Red 4 ring WP", "Red 3 ring in negative corner + 1 ring on alliance", 3, 0, true),
-		 jas::jasauton(red_6ring, 0, 0, "Red 6 ring no WP", "Red 6 ring in negative corner", 6, 0, false),
-		 jas::jasauton(skills, 0, 2, "Old skills auton", "Unfinished, inconsistent skills auton", 6, 6, true),
-		 jas::jasauton(skills50, 0, 2, "New skills auton", "Potential 50 pt skills auton- does not work yet, takes too long", 5, 6, true),
-
-		 jas::jasauton(move_forward, 2, 2, "Move forward", "Drive straight forward", 0, 0, false),
-		 jas::jasauton(testtestest, 2, 2, "Odom test", "Simple test to see if odometry works", 3, 2, true)
+		{
+		 jas::jasauton(drive_example, 1, 1, "Drive Example", "Drives or some shit idk", 2, 0, false),
+		
 		 });
 
 	// auton builder modules, for testing

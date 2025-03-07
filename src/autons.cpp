@@ -52,8 +52,11 @@ void default_constants() {
 	chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
-int rizzler = 1;
-lv_obj_t *gyat;
+
+///
+// EXAMPLES BELOW
+///
+
 
 ///
 // Drive Example
